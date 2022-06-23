@@ -1,22 +1,10 @@
 const router = require('express').Router();
 const { Product, Category, Tag, ProductTag } = require('../../models');
 
-// The `/api/products` endpoint
 
-// get all products
-// router.get('/', (req, res) => {
-//   // find all products
-//   // be sure to include its associated Category and Tag data
-//   const productData = Product.findAll({
-//     include: [{ model: Category}],
-    
-//   })
-//   res.json(productData)
-// });
 
 router.get('/', async (req, res) => {
   try {
-    // find all library cards and perform a JOIN to include all associated Readers
     const productData = await Product.findAll({
       include: [{ model: Category}, {model: Tag}],
     });
@@ -28,7 +16,6 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   try {
-    // find all library cards and perform a JOIN to include all associated Readers
     const productData = await Product.findByPk(req.params.id, {
       include: [{ model: Category}, {model: Tag}],
     });
@@ -108,7 +95,7 @@ router.put('/:id', (req, res) => {
     })
     .then((updatedProductTags) => res.json(updatedProductTags))
     .catch((err) => {
-      // console.log(err);
+      console.log(err);
       res.status(400).json(err);
     });
 });
